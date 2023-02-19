@@ -37,16 +37,36 @@ class HomePage extends StatelessWidget {
         title: const Text('Home Page'),
       ),
       body: Center(
-        child: StreamBuilder<int>(
-          stream: counterBloc.counterStream,
-          builder: (context, snapshot) {
-            return Text(
-              snapshot.data.toString(),
-              style: const TextStyle(
-                fontSize: 20,
-              ),
-            );
-          },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            StreamBuilder<int>(
+              stream: counterBloc.autoCounterStream.stream,
+              builder: (_, snapshot) {
+                if (snapshot.hasData) {
+                  return Text(
+                    'Auto: ${snapshot.data}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                    ),
+                  );
+                } else {
+                  return const Text('Loading...');
+                }
+              },
+            ),
+            StreamBuilder<int>(
+              stream: counterBloc.counterStream,
+              builder: (_, snapshot) {
+                return Text(
+                  snapshot.data.toString(),
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
       floatingActionButton: Row(
