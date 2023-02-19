@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
+import 'dart:developer' as developer show log;
 
 class CounterBloc {
   int counter = 0;
@@ -35,6 +35,13 @@ class CounterBloc {
       }
       counterSink.add(counter);
     });
+  }
+
+  void dispose() {
+    _stateStreamCounter.close();
+    _eventStreamCounter.close();
+    autoCounterStream.close();
+    developer.log('Stream Controllers closed.');
   }
 }
 

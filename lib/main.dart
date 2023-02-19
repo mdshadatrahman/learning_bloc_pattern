@@ -18,15 +18,26 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final counterBloc = CounterBloc();
+
+  @override
+  void dispose() {
+    counterBloc.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +77,17 @@ class HomePage extends StatelessWidget {
                 );
               },
             ),
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.pushReplacement(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => const TestWidget(),
+            //       ),
+            //     );
+            //   },
+            //   child: const Text('Go next'),
+            // ),
           ],
         ),
       ),
@@ -93,6 +115,22 @@ class HomePage extends StatelessWidget {
             child: const Icon(Icons.loop),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class TestWidget extends StatelessWidget {
+  const TestWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('New page'),
+      ),
+      body: const Center(
+        child: Text('New page'),
       ),
     );
   }
